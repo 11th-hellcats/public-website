@@ -53,9 +53,9 @@
 
         <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
           <button type="button" @click="set('about')" :class="tab==='about' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">About</button>
-          <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Discord</button>
+          <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Public Discord</button>
           <button type="button" @click="set('how')" :class="tab==='how' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">How to join</button>
-          <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server</button>
+          <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server & Stats</button>
         </div>
 
         <div class="relative w-full min-h-[260px]">
@@ -64,12 +64,13 @@
               <template x-if="section==='about'">
                 <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
                   <h2 class="text-base text-sky-200 font-semibold mb-2">About</h2>
-                  <p class="text-slate-200">We are a competitive, console-only, Oceania Hell Let Loose clan. New and experienced players are welcome.</p>
+                  <p class="text-slate-200">We are a competitive, console-only, Oceania <strong>Hell Let Loose</strong> clan. We currently compete in <i>The Premier League (TPL), Off-Season Competitive League (OSCL)</i>, and <i>Winter War League (WWL)</i>, along with regular scrims against other Oceania clans.</p>
+                  <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
                 </article>
               </template>
               <template x-if="section==='discord'">
                 <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
-                  <h2 class="text-base text-sky-200 font-semibold mb-2">Discord</h2>
+                  <h2 class="text-base text-sky-200 font-semibold mb-2">Public Discord</h2>
                   <p class="text-slate-200 mb-3">Join our Discord for map voting, recruitment, or to contact the team directly.</p>
                   <a href="https://discord.gg/NtHPfK4r" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold">Public Discord</a>
                 </article>
@@ -77,12 +78,11 @@
               <template x-if="section==='how'">
                 <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
                   <h2 class="text-base text-sky-200 font-semibold mb-2">How to join</h2>
-                  <ol class="list-decimal list-inside space-y-1 text-slate-100">
-                    <li>Hop into Discord and say g’day in <code>#recruitment</code>.</li>
-                    <li>Tell us your preferred role: SL, Support, Armour, Recon, or Infantry.</li>
-                    <li>Join an open night for a quick familiarisation.</li>
-                    <li>Add the clan tag once you’re settled.</li>
-                  </ol>
+                  <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
+                  <ul class="list-decimal list-inside space-y-1 text-slate-100">
+                    <li>Hop into Discord and say g'day, or go to <span class="bg-amber-400 text-amber-900 px-1 rounded">#join-the-team</span>.</li>
+                    <li>Find any member with an <span class="bg-amber-400 text-amber-900 px-1 rounded">11TH</span> tag in-game, on any server, and say hi</li>
+                  </ul>
                 </article>
               </template>
               <template x-if="section==='server'">
