@@ -1,72 +1,146 @@
 <!doctype html>
-<html lang="en-au">
+<html lang="en-AU">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HLL Clan – Join Us</title>
-  <meta name="description" content="One-screen landing page for a Hell Let Loose clan with logo, Discord link, how to join, and about info.">
-  <style>
-    :root {
-      --bg:#0b0f15; --panel:#111824; --ink:#e6edf3; --muted:#a7b6c8; --accent:#58e0a2; --accent-2:#79a6ff;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join the 11th Hellcats – Oceania Hell Let Loose Clan</title>
+  <meta name="description" content="The 11th Hellcats is a competitive, console-only, Oceania Hell Let Loose clan. Join us via Discord and play with a coordinated, skilled team." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0b0f15',
+            panel: '#111824',
+            ink: '#e6edf3',
+            muted: '#a7b6c8',
+            accent: '#efa12f',
+            accent2: '#d73426',
+          },
+          boxShadow: {
+            glow: '0 8px 28px rgba(88,224,162,.35)'
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial"]
+          }
+        }
+      }
     }
-    * { box-sizing:border-box }
-    html,body { height:100% }
-    body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:radial-gradient(70% 70% at 80% -10%, #1a2433 0%, var(--bg) 60%), var(--bg); color:var(--ink); }
-    .screen { min-height:100dvh; display:grid; place-items:center; padding:24px }
-    .card { width:min(100%,920px); background:color-mix(in srgb, var(--panel) 92%, #1a2230); border:1px solid #1f2a36; border-radius:16px; padding:22px; box-shadow:0 10px 40px rgba(0,0,0,.35) }
-    .grid { display:grid; grid-template-columns: 120px 1fr; gap:18px; align-items:center }
-    .logo { width:120px; height:120px; border-radius:14px; background:#0c131c; border:1px solid #1f2a36; object-fit:contain }
-    h1 { margin:0; font-size:clamp(22px,3vw,34px) }
-    .tag { color:var(--muted); font-size:14px; margin-top:4px }
-    .cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px }
-    .box { background:#0f151f; border:1px solid #1f2a36; border-radius:12px; padding:14px }
-    .box h2 { margin:0 0 8px 0; font-size:16px; color:#d3e5ff }
-    .box p { margin:0; color:#c7d5e5 }
-    .how ol { margin:0; padding-left:18px }
-    .how li { margin:6px 0; color:#d6e2f1 }
-    .cta { margin-top:12px; display:grid; grid-auto-flow:column; gap:10px; justify-content:start }
-    .btn { display:inline-grid; place-items:center; padding:10px 14px; border-radius:12px; background:linear-gradient(180deg,var(--accent),#35c67f); color:#061118; text-decoration:none; font-weight:650; font-size:14px; box-shadow:0 6px 18px rgba(88,224,162,.35) }
-    .btn.secondary { background:linear-gradient(180deg,var(--accent-2),#5b8dff); color:#07121a }
-    .meta { display:grid; grid-auto-flow:column; justify-content:space-between; align-items:center; gap:12px; color:var(--muted); font-size:12px; margin-top:10px }
-    @media (max-width:860px){ .grid{ grid-template-columns:80px 1fr } .logo{ width:80px; height:80px } .cols{ grid-template-columns:1fr } .cta{ grid-auto-flow:row } }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js" defer></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    body { background: radial-gradient(70% 70% at 80% -10%, #1a2433 0%, #0b0f15 60%), #0b0f15; }
+    [x-cloak] { display: none !important; }
   </style>
 </head>
-<body>
-  <main class="screen">
-    <section class="card" role="region" aria-label="HLL clan landing">
-      <div class="grid">
-        <img class="logo" src="logo.png" alt="Clan logo placeholder">
+<body class="min-h-screen text-ink font-sans">
+  <main id="main" class="min-h-screen flex flex-col justify-center p-6">
+    <section class="w-full flex flex-col items-center text-center gap-6">
+      <div class="max-w-4xl p-6 flex flex-col justify-center">
+        <img src="assets/11orangenothe.png" alt="11th Hellcats clan logo" loading="lazy" class="w-64 h-64 object-contain" />
+      </div>
+    </section>
+
+    <section class="w-full flex flex-col items-center text-center gap-6" x-data="tabs()" x-init="init()" x-cloak>
+      <div class="max-w-4xl flex flex-col justify-center bg-panel/95 backdrop-blur rounded-2xl border border-slate-800 shadow-xl p-6 gap-6">
         <header>
-          <h1>Clan Name</h1>
-          <div class="tag">Tactical. Team-first. Oceanic.</div>
-          <div class="cta">
-            <a class="btn" href="https://discord.gg/your-invite" target="_blank" rel="noopener">Join our Discord</a>
-            <a class="btn secondary" href="#how">How to join</a>
-          </div>
+          <h1 class="text-3xl font-semibold tracking-tight">11th Hellcats</h1>
+          <p class="text-muted text-sm mt-1">A competitive, console-only, Hell Let Loose clan.</p>
         </header>
-      </div>
 
-      <div class="cols" style="margin-top:18px">
-        <article class="box" aria-label="About">
-          <h2>About</h2>
-          <p>We’re an Australian Hell Let Loose clan centred on clean comms, defined roles, and respectful games. New and experienced players welcome. Regular Oceania scrims and community nights.</p>
-        </article>
-        <article id="how" class="box how" aria-label="How to join">
-          <h2>How to join</h2>
-          <ol>
-            <li>Hop into Discord and say g’day in #recruitment.</li>
-            <li>Tell us your preferred role: SL, Support, Armour, Recon, or Infantry.</li>
-            <li>Join an open night for a quick familiarisation.</li>
-            <li>Add the clan tag once you’re settled.</li>
-          </ol>
-        </article>
-      </div>
+        <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
+          <button type="button" @click="set('about')" :class="tab==='about' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">About</button>
+          <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Discord</button>
+          <button type="button" @click="set('how')" :class="tab==='how' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">How to join</button>
+          <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server</button>
+        </div>
 
-      <footer class="meta" aria-label="Meta">
-        <span>Oceania | PC | Hell Let Loose</span>
-        <span>Playing AEST evenings</span>
-      </footer>
+        <div class="relative w-full min-h-[260px]">
+          <template x-for="section in ['about','discord','how','server']" :key="section">
+            <div x-show="tab===section" x-transition.opacity.duration.150ms class="absolute inset-0" x-cloak>
+              <template x-if="section==='about'">
+                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+                  <h2 class="text-base text-sky-200 font-semibold mb-2">About</h2>
+                  <p class="text-slate-200">We are a competitive, console-only, Oceania Hell Let Loose clan. New and experienced players are welcome.</p>
+                </article>
+              </template>
+              <template x-if="section==='discord'">
+                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+                  <h2 class="text-base text-sky-200 font-semibold mb-2">Discord</h2>
+                  <p class="text-slate-200 mb-3">Join our Discord for map voting, recruitment, or to contact the team directly.</p>
+                  <a href="https://discord.gg/NtHPfK4r" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold">Public Discord</a>
+                </article>
+              </template>
+              <template x-if="section==='how'">
+                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+                  <h2 class="text-base text-sky-200 font-semibold mb-2">How to join</h2>
+                  <ol class="list-decimal list-inside space-y-1 text-slate-100">
+                    <li>Hop into Discord and say g’day in <code>#recruitment</code>.</li>
+                    <li>Tell us your preferred role: SL, Support, Armour, Recon, or Infantry.</li>
+                    <li>Join an open night for a quick familiarisation.</li>
+                    <li>Add the clan tag once you’re settled.</li>
+                  </ol>
+                </article>
+              </template>
+              <template x-if="section==='server'">
+                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+                  <h2 class="text-base text-sky-200 font-semibold mb-2">11th Public Server</h2>
+                  <p class="text-slate-200">Jump on our public HLL server for casual play and scrims.</p>
+                  <a href="http://145.223.22.23:7010/" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold shadow-glow">Game stats</a>
+
+                  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-3 text-sm">
+                    <div><dt class="text-muted">Name</dt><dd class="text-slate-100">11th Hellcats Public</dd></div>
+                    <div><dt class="text-muted">Region</dt><dd class="text-slate-100">Oceania</dd></div>
+                    <div><dt class="text-muted">Queue</dt><dd class="text-slate-100">Enabled</dd></div>
+                    <div><dt class="text-muted">Rules</dt><dd class="text-slate-100">No griefing. Squad leads on comms. Be respectful.</dd></div>
+                  </dl>
+                </article>
+              </template>
+            </div>
+          </template>
+        </div>
+
+        <footer class="flex flex-col sm:flex-row items-center justify-between gap-3 text-muted text-xs w-full">
+          <span>Oceania | Console | Hell Let Loose</span>
+          <span>Playing AEST evenings</span>
+        </footer>
+      </div>
     </section>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      VANTA.FOG({
+        el: '#main',
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        highlightColor: 0xffc200,
+        midtoneColor: 0xdc7b25,
+        lowlightColor: 0xd75d1a,
+        baseColor: 0x0,
+        blurFactor: 0.56,
+        speed: 0.60,
+        zoom: 0.80
+      });
+    });
+
+    function tabs() {
+      return {
+        tab: 'about',
+        init() {
+          const fromHash = window.location.hash.replace('#','');
+          if (['about','discord','how','server'].includes(fromHash)) this.tab = fromHash;
+          this.$watch('tab', (t) => {
+            history.replaceState(null, '', `#${t}`);
+          });
+        },
+        set(name) { this.tab = name; }
+      }
+    }
+  </script>
 </body>
 </html>
