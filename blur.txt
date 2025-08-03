@@ -1,0 +1,7 @@
+  highlightColor: 0xffc200,
+  midtoneColor: 0xdc7b25,
+  lowlightColor: 0xd75d1a,
+  baseColor: 0x0,
+  blurFactor: 0.56,
+  speed: 0.60,
+  zoom: 0.80
