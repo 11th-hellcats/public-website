@@ -34,6 +34,8 @@
   <style>
     body { background: radial-gradient(70% 70% at 80% -10%, #1a2433 0%, #0b0f15 60%), #0b0f15; }
     [x-cloak] { display: none !important; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
   </style>
 </head>
 <body class="min-h-screen text-ink font-sans">
@@ -44,7 +46,7 @@
       </div>
     </section>
 
-    <section class="w-full flex flex-col items-center text-center gap-6" x-data="tabs()" x-init="init()" x-cloak>
+    <section class="w-full flex flex-col items-center text-center gap-6" x-data="tabs()" x-init="init()">
       <div class="max-w-4xl flex flex-col justify-center bg-panel/95 backdrop-blur rounded-2xl border border-slate-800 shadow-xl p-6 gap-6">
         <header>
           <h1 class="text-3xl font-semibold tracking-tight">11th Hellcats</h1>
@@ -53,54 +55,69 @@
 
         <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
           <button type="button" @click="set('about')" :class="tab==='about' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">About</button>
-          <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Public Discord</button>
+          <!-- <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Public Discord</button> -->
           <button type="button" @click="set('how')" :class="tab==='how' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">How to join</button>
           <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server & Stats</button>
         </div>
 
-        <div class="relative w-full min-h-[260px]">
-          <template x-for="section in ['about','discord','how','server']" :key="section">
-            <div x-show="tab===section" x-transition.opacity.duration.150ms class="absolute inset-0" x-cloak>
-              <template x-if="section==='about'">
-                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
-                  <h2 class="text-base text-sky-200 font-semibold mb-2">About</h2>
-                  <p class="text-slate-200">We are a competitive, console-only, Oceania <strong>Hell Let Loose</strong> clan. We currently compete in <i>The Premier League (TPL), Off-Season Competitive League (OSCL)</i>, and <i>Winter War League (WWL)</i>, along with regular scrims against other Oceania clans.</p>
-                  <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
-                </article>
-              </template>
-              <template x-if="section==='discord'">
-                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
-                  <h2 class="text-base text-sky-200 font-semibold mb-2">Public Discord</h2>
-                  <p class="text-slate-200 mb-3">Join our Discord for map voting, recruitment, or to contact the team directly.</p>
-                  <a href="https://discord.gg/NtHPfK4r" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold">Public Discord</a>
-                </article>
-              </template>
-              <template x-if="section==='how'">
-                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
-                  <h2 class="text-base text-sky-200 font-semibold mb-2">How to join</h2>
-                  <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
-                  <ul class="list-decimal list-inside space-y-1 text-slate-100">
-                    <li>Hop into Discord and say g'day, or go to <span class="bg-amber-400 text-amber-900 px-1 rounded">#join-the-team</span>.</li>
-                    <li>Find any member with an <span class="bg-amber-400 text-amber-900 px-1 rounded">11TH</span> tag in-game, on any server, and say hi</li>
-                  </ul>
-                </article>
-              </template>
-              <template x-if="section==='server'">
-                <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
-                  <h2 class="text-base text-sky-200 font-semibold mb-2">11th Public Server</h2>
-                  <p class="text-slate-200">Jump on our public HLL server for casual play and scrims.</p>
-                  <a href="http://145.223.22.23:7010/" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold shadow-glow">Game stats</a>
+        <div class="relative w-full">
+          <div x-show="tab==='about'" class="tab-content" :class="tab==='about' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">About</h2>
+              <p class="text-slate-200">We are a competitive, console-only, Oceania <strong>Hell Let Loose</strong> clan. We currently compete in <i>The Premier League (TPL), Off-Season Competitive League (OSCL)</i>, and <i>Winter War League (WWL)</i>, along with regular scrims against other Oceania clans.</p>
+              <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
+            </article>
+          </div>
+          <!-- <div x-show="tab==='discord'" class="tab-content" :class="tab==='discord' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Public Discord</h2>
+              <p class="text-slate-200 mb-3">Join our Discord for map voting, recruitment, or to contact the team directly.</p>
+              <a href="https://discord.gg/NtHPfK4r" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold">Public Discord</a>
+            </article>
+          </div> -->
+          <div x-show="tab==='how'" class="tab-content" :class="tab==='how' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">How to join</h2>
+              <p class="text-slate-200 mb-3">The 11th is always looking for open to new members, no matter what your experience level. We offer regular games, a relaxed vibe, regular training and skills improvement, and reward initiative.</p>
 
-                  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-3 text-sm">
-                    <div><dt class="text-muted">Name</dt><dd class="text-slate-100">11th Hellcats Public</dd></div>
-                    <div><dt class="text-muted">Region</dt><dd class="text-slate-100">Oceania</dd></div>
-                    <div><dt class="text-muted">Queue</dt><dd class="text-slate-100">Enabled</dd></div>
-                    <div><dt class="text-muted">Rules</dt><dd class="text-slate-100">No griefing. Squad leads on comms. Be respectful.</dd></div>
-                  </dl>
-                </article>
-              </template>
+              <ul class="list-decimal list-inside space-y-1 text-slate-100">
+                <li>Hop into Discord and say g'day, or go to <span class="bg-amber-400 text-amber-900 px-1 rounded">#join-the-team</span>.</li>
+                <li>Find any member with an <span class="bg-amber-400 text-amber-900 px-1 rounded">11TH</span> tag in-game, on any server, and say hi</li>
+              </ul>
+
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Minimum expectations</h2>
+              <ul class="list-decimal list-inside space-y-1 text-slate-100">
+                <li>Have a mic, be willing to talk, and be ready to work in a team</li>
+                <li>Be available during a reasonable number of game times (usually Sunday day and Wednesday evening in Australia and New Zealand)</li>
+                <li>Attend training when you are available</li>
+                <li>Check the 11th Discord weekly for game rosters and updates</li>
+              </ul>
+
+            </article>
+          </div>
+          <div x-show="tab==='server'" class="tab-content" :class="tab==='server' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">11th Public Server</h2>
+              <p class="text-slate-200">Jump on our public HLL server for casual play and scrims.</p>
+              <a href="http://145.223.22.23:7010/" target="_blank" rel="noopener" class="inline-grid place-items-center px-4 py-2 rounded-xl bg-accent text-slate-900 font-semibold shadow-glow">Game stats</a>
+
+              <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-3 text-sm">
+                <div><dt class="text-muted">Name</dt><dd class="text-slate-100">11th Hellcats Public</dd></div>
+                <div><dt class="text-muted">Region</dt><dd class="text-slate-100">Oceania</dd></div>
+                <div><dt class="text-muted">Queue</dt><dd class="text-slate-100">Enabled</dd></div>
+                <div><dt class="text-muted">Rules</dt><dd class="text-slate-100">No griefing. Squad leads on comms. Be respectful.</dd></div>
+              </dl>
+            </article>
+          </div>
+        </div>
+
+        <div class="relative w-full">
+          <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-2 text-center text-sm">
+            <p class="text-slate-200 mb-3">Join our Discord for map voting, recruitment, or to contact the team directly.</p>
+            <div class="flex flex-row justify-center">
+                <a href="https://discord.gg/NtHPfK4r" target="_blank" rel="noopener" class="inline-grid place-items-center px-12 py-2 rounded-xl bg-accent text-slate-900 font-semibold">Public Discord</a>
             </div>
-          </template>
+          </article>
         </div>
 
         <footer class="flex flex-col sm:flex-row items-center justify-between gap-3 text-muted text-xs w-full">
