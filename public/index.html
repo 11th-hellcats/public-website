@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en-au">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HLL Clan – Join Us</title>
+  <meta name="description" content="One-screen landing page for a Hell Let Loose clan with logo, Discord link, how to join, and about info.">
+  <style>
+    :root {
+      --bg:#0b0f15; --panel:#111824; --ink:#e6edf3; --muted:#a7b6c8; --accent:#58e0a2; --accent-2:#79a6ff;
+    }
+    * { box-sizing:border-box }
+    html,body { height:100% }
+    body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:radial-gradient(70% 70% at 80% -10%, #1a2433 0%, var(--bg) 60%), var(--bg); color:var(--ink); }
+    .screen { min-height:100dvh; display:grid; place-items:center; padding:24px }
+    .card { width:min(100%,920px); background:color-mix(in srgb, var(--panel) 92%, #1a2230); border:1px solid #1f2a36; border-radius:16px; padding:22px; box-shadow:0 10px 40px rgba(0,0,0,.35) }
+    .grid { display:grid; grid-template-columns: 120px 1fr; gap:18px; align-items:center }
+    .logo { width:120px; height:120px; border-radius:14px; background:#0c131c; border:1px solid #1f2a36; object-fit:contain }
+    h1 { margin:0; font-size:clamp(22px,3vw,34px) }
+    .tag { color:var(--muted); font-size:14px; margin-top:4px }
+    .cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px }
+    .box { background:#0f151f; border:1px solid #1f2a36; border-radius:12px; padding:14px }
+    .box h2 { margin:0 0 8px 0; font-size:16px; color:#d3e5ff }
+    .box p { margin:0; color:#c7d5e5 }
+    .how ol { margin:0; padding-left:18px }
+    .how li { margin:6px 0; color:#d6e2f1 }
+    .cta { margin-top:12px; display:grid; grid-auto-flow:column; gap:10px; justify-content:start }
+    .btn { display:inline-grid; place-items:center; padding:10px 14px; border-radius:12px; background:linear-gradient(180deg,var(--accent),#35c67f); color:#061118; text-decoration:none; font-weight:650; font-size:14px; box-shadow:0 6px 18px rgba(88,224,162,.35) }
+    .btn.secondary { background:linear-gradient(180deg,var(--accent-2),#5b8dff); color:#07121a }
+    .meta { display:grid; grid-auto-flow:column; justify-content:space-between; align-items:center; gap:12px; color:var(--muted); font-size:12px; margin-top:10px }
+    @media (max-width:860px){ .grid{ grid-template-columns:80px 1fr } .logo{ width:80px; height:80px } .cols{ grid-template-columns:1fr } .cta{ grid-auto-flow:row } }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <section class="card" role="region" aria-label="HLL clan landing">
+      <div class="grid">
+        <img class="logo" src="logo.png" alt="Clan logo placeholder">
+        <header>
+          <h1>Clan Name</h1>
+          <div class="tag">Tactical. Team-first. Oceanic.</div>
+          <div class="cta">
+            <a class="btn" href="https://discord.gg/your-invite" target="_blank" rel="noopener">Join our Discord</a>
+            <a class="btn secondary" href="#how">How to join</a>
+          </div>
+        </header>
+      </div>
+
+      <div class="cols" style="margin-top:18px">
+        <article class="box" aria-label="About">
+          <h2>About</h2>
+          <p>We’re an Australian Hell Let Loose clan centred on clean comms, defined roles, and respectful games. New and experienced players welcome. Regular Oceania scrims and community nights.</p>
+        </article>
+        <article id="how" class="box how" aria-label="How to join">
+          <h2>How to join</h2>
+          <ol>
+            <li>Hop into Discord and say g’day in #recruitment.</li>
+            <li>Tell us your preferred role: SL, Support, Armour, Recon, or Infantry.</li>
+            <li>Join an open night for a quick familiarisation.</li>
+            <li>Add the clan tag once you’re settled.</li>
+          </ol>
+        </article>
+      </div>
+
+      <footer class="meta" aria-label="Meta">
+        <span>Oceania | PC | Hell Let Loose</span>
+        <span>Playing AEST evenings</span>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
