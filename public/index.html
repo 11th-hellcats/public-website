@@ -53,11 +53,14 @@
           <p class="text-muted text-sm mt-1">A competitive, console-only, Hell Let Loose clan.</p>
         </header>
 
+        <!-- Add the new tab buttons to the tablist -->
         <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
           <button type="button" @click="set('about')" :class="tab==='about' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">About</button>
           <!-- <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Public Discord</button> -->
           <button type="button" @click="set('how')" :class="tab==='how' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">How to join</button>
           <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server & Stats</button>
+          <button type="button" @click="set('results')" :class="tab==='results' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Competitive Results</button>
+          <button type="button" @click="set('matchups')" :class="tab==='matchups' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Competitive Matchups</button>
         </div>
 
         <div class="relative w-full">
@@ -109,6 +112,89 @@
               </dl>
             </article>
           </div>
+          <!-- Add the new tab content sections below the existing ones -->
+          <div x-show="tab==='results'" class="tab-content" :class="tab==='results' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Results</h2>
+              <p class="text-slate-200 mb-3">View our latest competitive results from TPL, OSCL, WWL, and scrims.</p>
+              <!-- Competition Filter Dropdown -->
+              <div class="mb-4 flex items-center gap-2">
+                <label for="competition-filter" class="text-slate-300 font-semibold">Filter by competition:</label>
+                <select id="competition-filter" x-model="competition" class="px-3 py-2 rounded bg-slate-800 text-slate-100 border border-slate-700">
+                  <option value="all">All</option>
+                  <option value="wwl">Winter War League</option>
+                  <option value="tpl">TPL</option>
+                  <option value="oscl">OSCL</option>
+                </select>
+              </div>
+              <div class="flex flex-col gap-4">
+                <!-- WWL: 11th vs R22R -->
+                <div x-show="competition==='all' || competition==='wwl'" class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
+                  <div class="flex items-center gap-2">
+                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
+                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">2</span>
+                  </div>
+                  <span class="font-semibold text-slate-300 text-xl">vs</span>
+                  <div class="flex items-center gap-2">
+                    <img src="assets/R22R-LOGO.png" alt="R22R logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">R22R</span>
+                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">3</span>
+                  </div>
+                  <div class="flex flex-col items-end ml-6">
+                    <span class="text-sky-300 font-semibold">Sun 03 Aug</span>
+                    <span class="text-slate-400 text-sm">11:00am AEST</span>
+                    <span class="text-slate-400 text-xs mt-1">Match Time: 1hr 30 min</span>
+                  </div>
+                </div>
+                <!-- WWL: 11th vs L201 -->
+                <!--<div x-show="competition==='all' || competition==='wwl'" class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
+                  <div class="flex items-center gap-2">
+                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
+                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">0</span>
+                  </div>
+                  <span class="font-semibold text-slate-300 text-xl">vs</span>
+                  <div class="flex items-center gap-2">
+                    <img src="assets/l201.png" alt="L201 logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">L201</span>
+                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">0</span>
+                  </div>
+                  <div class="flex flex-col items-end ml-6">
+                    <span class="text-sky-300 font-semibold">Sun 10 Aug</span>
+                    <span class="text-slate-400 text-sm">11:00am AEST</span>
+                    <span class="text-slate-400 text-xs mt-1">Match Time: </span>
+                  </div>
+                </div>
+                <!-- Add more result cards with x-show="competition==='all' || competition==='tpl'" or "competition==='oscl'" as needed -->
+              </div>
+            </article>
+          </div>
+          <div x-show="tab==='matchups'" class="tab-content" :class="tab==='matchups' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Matchups</h2>
+              <p class="text-slate-200 mb-3">Upcoming Competitive Matchups.</p>
+              <!-- Example matchup card -->
+              <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
+                  <div class="flex items-center gap-2">
+                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
+                  </div>
+                  <span class="font-semibold text-slate-300 text-xl">vs</span>
+                  <div class="flex items-center gap-2">
+                    <img src="assets/l201.png" alt="L201 logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
+                    <span class="font-bold text-slate-100 text-lg">L201</span>
+                  </div>
+                  <div class="flex flex-col items-end ml-6">
+                    <span class="text-sky-300 font-semibold">Sun 10 Aug</span>
+                    <span class="text-slate-400 text-sm">11:00am AEST</span>
+                  </div>
+                </div>
+                <!-- Add more matchup cards below as needed -->
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="relative w-full">
@@ -148,9 +234,10 @@
     function tabs() {
       return {
         tab: 'about',
+        competition: 'all', // Add this property
         init() {
           const fromHash = window.location.hash.replace('#','');
-          if (['about','discord','how','server'].includes(fromHash)) this.tab = fromHash;
+          if (['about','discord','how','server','results','matchups'].includes(fromHash)) this.tab = fromHash;
           this.$watch('tab', (t) => {
             history.replaceState(null, '', `#${t}`);
           });
