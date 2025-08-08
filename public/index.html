@@ -28,6 +28,30 @@
       }
     }
   </script>
+  <script id="games-json" type="application/json">
+  [
+    {
+      "comp":"wwl",
+      "home":{"name":"11th Hellcats","logo":"assets/11orangenothe.png","score":2},
+      "away":{"name":"R22R","logo":"assets/R22R-LOGO.png","score":3},
+      "date":"2025-08-03",
+      "time":"11:00",
+      "tz":"AEST",
+      "duration":"1hr 30 min",
+      "complete":true
+    },
+    {
+      "comp":"tpl",
+      "home":{"name":"11th Hellcats","logo":"assets/11orangenothe.png","score":null},
+      "away":{"name":"L201","logo":"assets/l201.png","score":null},
+      "date":"2025-08-10",
+      "time":"11:00",
+      "tz":"AEST",
+      "duration":null,
+      "complete":false
+    }
+  ]
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js" defer></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -117,8 +141,55 @@
             <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
               <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Results</h2>
               <p class="text-slate-200 mb-3">View our latest competitive results from TPL, OSCL, WWL, and scrims.</p>
-              <!-- Competition Filter Dropdown -->
-              <div class="mb-4 flex items-center gap-2">
+              <div class="flex flex-col gap-2">
+                <!-- Competition list -->
+                <div class="mb-4 flex gap-2 items-center justify-end">
+                  <label for="competition-filter" class="text-slate-300 font-semibold">Filter by competition:</label>
+                  <select id="competition-filter" x-model="competition" class="px-3 py-2 rounded bg-slate-800 text-slate-100 border border-slate-700">
+                    <option value="all">All</option>
+                    <option value="wwl">Winter War League</option>
+                    <option value="tpl">TPL</option>
+                    <option value="oscl">OSCL</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                  <template x-for="item in filteredResults()" :key="item.date + item.home.name + item.away.name">
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow w-full">
+                      <div class="flex justify-between sm:justify-start items-center gap-4 w-full">
+                        <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                          <img :src="item.home.logo" :alt="item.home.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                          <span class="font-bold text-slate-100 text-lg" x-text="item.home.name"></span>
+                          <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg" x-text="item.home.score"></span>
+                        </div>
+                        <span class="font-semibold text-slate-300 text-xl">vs</span>
+                        <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                          <img :src="item.away.logo" :alt="item.away.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                          <span class="font-bold text-slate-100 text-lg" x-text="item.away.name"></span>
+                          <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg" x-text="item.away.score"></span>
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-center sm:items-end text-center sm:text-right">
+                        <span class="text-sky-300 font-semibold" x-text="fmtDate(item.date)"></span>
+                        <span class="text-slate-400 text-sm" x-text="item.time + ' ' + item.tz"></span>
+                        <span class="text-slate-400 text-xs mt-1" x-text="'Match Time: ' + item.duration"></span>
+                      </div>
+                    </div>
+                  </template>
+
+                  <div x-show="filteredResults().length === 0" class="text-slate-400 text-sm text-center">
+                    No completed results for this competition.
+                  </div>
+                </div>
+
+            </article>
+          </div>
+          <div x-show="tab==='matchups'" class="tab-content" :class="tab==='matchups' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Matchups</h2>
+              <p class="text-slate-200 mb-3">Upcoming Competitive Matchups.</p>
+              
+              <div class="mb-4 flex gap-2 items-center justify-end">
                 <label for="competition-filter" class="text-slate-300 font-semibold">Filter by competition:</label>
                 <select id="competition-filter" x-model="competition" class="px-3 py-2 rounded bg-slate-800 text-slate-100 border border-slate-700">
                   <option value="all">All</option>
@@ -127,72 +198,33 @@
                   <option value="oscl">OSCL</option>
                 </select>
               </div>
+
               <div class="flex flex-col gap-4">
-                <!-- WWL: 11th vs R22R -->
-                <div x-show="competition==='all' || competition==='wwl'" class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
-                  <div class="flex items-center gap-2">
-                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
-                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">2</span>
+                <template x-for="item in filteredMatchups()" :key="item.date + item.home.name + item.away.name">
+                  <div class="flex flex-col sm:flex-row items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow w-full">
+                    <div class="flex justify-between sm:justify-start items-center gap-4 w-full">
+                      <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                        <img :src="item.home.logo" :alt="item.home.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                        <span class="font-bold text-slate-100 text-lg" x-text="item.home.name"></span>
+                      </div>
+                      <span class="font-semibold text-slate-300 text-xl">vs</span>
+                      <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                        <img :src="item.away.logo" :alt="item.away.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                        <span class="font-bold text-slate-100 text-lg" x-text="item.away.name"></span>
+                      </div>
+                    </div>
+                    <div class="flex flex-col items-center sm:items-end text-center sm:text-right">
+                      <span class="text-sky-300 font-semibold" x-text="fmtDate(item.date)"></span>
+                      <span class="text-slate-400 text-sm" x-text="item.time + ' ' + item.tz"></span>
+                    </div>
                   </div>
-                  <span class="font-semibold text-slate-300 text-xl">vs</span>
-                  <div class="flex items-center gap-2">
-                    <img src="assets/R22R-LOGO.png" alt="R22R logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">R22R</span>
-                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">3</span>
-                  </div>
-                  <div class="flex flex-col items-end ml-6">
-                    <span class="text-sky-300 font-semibold">Sun 03 Aug</span>
-                    <span class="text-slate-400 text-sm">11:00am AEST</span>
-                    <span class="text-slate-400 text-xs mt-1">Match Time: 1hr 30 min</span>
-                  </div>
+                </template>
+
+                <div x-show="filteredMatchups().length === 0" class="text-slate-400 text-sm text-center">
+                  No upcoming matchups for this competition.
                 </div>
-                <!-- WWL: 11th vs L201 -->
-                <!--<div x-show="competition==='all' || competition==='wwl'" class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
-                  <div class="flex items-center gap-2">
-                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
-                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">0</span>
-                  </div>
-                  <span class="font-semibold text-slate-300 text-xl">vs</span>
-                  <div class="flex items-center gap-2">
-                    <img src="assets/l201.png" alt="L201 logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">L201</span>
-                    <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg">0</span>
-                  </div>
-                  <div class="flex flex-col items-end ml-6">
-                    <span class="text-sky-300 font-semibold">Sun 10 Aug</span>
-                    <span class="text-slate-400 text-sm">11:00am AEST</span>
-                    <span class="text-slate-400 text-xs mt-1">Match Time: </span>
-                  </div>
-                </div>
-                <!-- Add more result cards with x-show="competition==='all' || competition==='tpl'" or "competition==='oscl'" as needed -->
               </div>
-            </article>
-          </div>
-          <div x-show="tab==='matchups'" class="tab-content" :class="tab==='matchups' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
-            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
-              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Matchups</h2>
-              <p class="text-slate-200 mb-3">Upcoming Competitive Matchups.</p>
-              <!-- Example matchup card -->
-              <div class="flex flex-col gap-4">
-                <div class="flex items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow">
-                  <div class="flex items-center gap-2">
-                    <img src="assets/11orangenothe.png" alt="11th Hellcats logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">11th Hellcats</span>
-                  </div>
-                  <span class="font-semibold text-slate-300 text-xl">vs</span>
-                  <div class="flex items-center gap-2">
-                    <img src="assets/l201.png" alt="L201 logo" class="w-10 h-10 rounded bg-slate-700 object-contain" />
-                    <span class="font-bold text-slate-100 text-lg">L201</span>
-                  </div>
-                  <div class="flex flex-col items-end ml-6">
-                    <span class="text-sky-300 font-semibold">Sun 10 Aug</span>
-                    <span class="text-slate-400 text-sm">11:00am AEST</span>
-                  </div>
-                </div>
-                <!-- Add more matchup cards below as needed -->
-              </div>
+
             </article>
           </div>
         </div>
@@ -234,15 +266,39 @@
     function tabs() {
       return {
         tab: 'about',
-        competition: 'all', // Add this property
+        competition: 'all',
+        games: [],
         init() {
-          const fromHash = window.location.hash.replace('#','');
-          if (['about','discord','how','server','results','matchups'].includes(fromHash)) this.tab = fromHash;
-          this.$watch('tab', (t) => {
-            history.replaceState(null, '', `#${t}`);
-          });
+          const fromHash = window.location.hash.replace('#', '');
+          if (['about','discord','how','server','results','matchups'].includes(fromHash)) {
+            this.tab = fromHash;
+          }
+
+          // Fetch external JSON
+          fetch('games.json', { cache: 'no-store' })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              return res.json();
+            })
+            .then(data => { this.games = data; })
+            .catch(err => {
+              console.error('Failed to load games JSON', err);
+              this.games = [];
+            });
+
+          this.$watch('tab', (t) => history.replaceState(null, '', `#${t}`));
         },
-        set(name) { this.tab = name; }
+        set(name) { this.tab = name; },
+        fmtDate(iso) {
+          const d = new Date(iso + 'T00:00:00');
+          return d.toLocaleDateString('en-AU', { weekday:'short', day:'2-digit', month:'short' });
+        },
+        filteredResults() {
+          return this.games.filter(g => g.complete && (this.competition === 'all' || g.comp === this.competition));
+        },
+        filteredMatchups() {
+          return this.games.filter(g => !g.complete && (this.competition === 'all' || g.comp === this.competition));
+        }
       }
     }
   </script>

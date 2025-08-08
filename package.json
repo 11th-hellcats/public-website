@@ -1,0 +1,13 @@
+{
+  "name": "hellcats-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "http-server ./public -p 8000 -c-1 --cors",
+    "start:https": "http-server ./public -S -C cert.pem -K key.pem -p 8443 -c-1 --cors"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
