@@ -53,11 +53,14 @@
           <p class="text-muted text-sm mt-1">A competitive, console-only, Hell Let Loose clan.</p>
         </header>
 
+        <!-- Add the new tab buttons to the tablist -->
         <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
           <button type="button" @click="set('about')" :class="tab==='about' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">About</button>
           <!-- <button type="button" @click="set('discord')" :class="tab==='discord' ? 'bg-accent text-slate-900' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Public Discord</button> -->
           <button type="button" @click="set('how')" :class="tab==='how' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">How to join</button>
           <button type="button" @click="set('server')" :class="tab==='server' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">11th Public Server & Stats</button>
+          <button type="button" @click="set('results')" :class="tab==='results' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Competitive Results</button>
+          <button type="button" @click="set('matchups')" :class="tab==='matchups' ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink'" class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold">Competitive Matchups</button>
         </div>
 
         <div class="relative w-full">
@@ -109,6 +112,97 @@
               </dl>
             </article>
           </div>
+          <!-- Add the new tab content sections below the existing ones -->
+          <div x-show="tab==='results'" class="tab-content" :class="tab==='results' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Results</h2>
+              <p class="text-slate-200 mb-3">View our latest competitive results from TPL, OSCL, WWL, and scrims.</p>
+              <div class="flex flex-col gap-2">
+                <!-- Competition list -->
+                <div class="mb-4 flex gap-2 items-center justify-end">
+                  <label for="competition-filter" class="text-slate-300 font-semibold">Filter by competition:</label>
+                  <select id="competition-filter" x-model="competition" class="px-3 py-2 rounded bg-slate-800 text-slate-100 border border-slate-700">
+                    <option value="all">All</option>
+                    <option value="wwl">Winter War League</option>
+                    <option value="tpl">TPL</option>
+                    <option value="oscl">OSCL</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                  <template x-for="item in filteredResults()" :key="item.date + item.home.name + item.away.name">
+                    <div class="flex flex-col sm:flex-row items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow w-full">
+                      <div class="flex justify-between sm:justify-start items-center gap-4 w-full">
+                        <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                          <img :src="item.home.logo" :alt="item.home.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                          <span class="font-bold text-slate-100 text-lg" x-text="item.home.name"></span>
+                          <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg" x-text="item.home.score"></span>
+                        </div>
+                        <span class="font-semibold text-slate-300 text-xl">vs</span>
+                        <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                          <img :src="item.away.logo" :alt="item.away.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                          <span class="font-bold text-slate-100 text-lg" x-text="item.away.name"></span>
+                          <span class="ml-2 px-2 py-1 rounded bg-slate-900 text-accent font-bold text-lg" x-text="item.away.score"></span>
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-center sm:items-end text-center sm:text-right">
+                        <span class="text-sky-300 font-semibold" x-text="fmtDate(item.date)"></span>
+                        <span class="text-slate-400 text-sm" x-text="item.time + ' ' + item.tz"></span>
+                        <span class="text-slate-400 text-xs mt-1" x-text="'Match Time: ' + item.duration"></span>
+                      </div>
+                    </div>
+                  </template>
+
+                  <div x-show="filteredResults().length === 0" class="text-slate-400 text-sm text-center">
+                    No completed results for this competition.
+                  </div>
+                </div>
+
+            </article>
+          </div>
+          <div x-show="tab==='matchups'" class="tab-content" :class="tab==='matchups' ? 'active' : ''" x-transition.opacity.duration.150ms x-cloak>
+            <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
+              <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Matchups</h2>
+              <p class="text-slate-200 mb-3">Upcoming Competitive Matchups.</p>
+              
+              <div class="mb-4 flex gap-2 items-center justify-end">
+                <label for="competition-filter" class="text-slate-300 font-semibold">Filter by competition:</label>
+                <select id="competition-filter" x-model="competition" class="px-3 py-2 rounded bg-slate-800 text-slate-100 border border-slate-700">
+                  <option value="all">All</option>
+                  <option value="wwl">Winter War League</option>
+                  <option value="tpl">TPL</option>
+                  <option value="oscl">OSCL</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-4">
+                <template x-for="item in filteredMatchups()" :key="item.date + item.home.name + item.away.name">
+                  <div class="flex flex-col sm:flex-row items-center justify-between bg-slate-800/60 rounded-xl p-4 shadow w-full">
+                    <div class="flex justify-between sm:justify-start items-center gap-4 w-full">
+                      <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                        <img :src="item.home.logo" :alt="item.home.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                        <span class="font-bold text-slate-100 text-lg" x-text="item.home.name"></span>
+                      </div>
+                      <span class="font-semibold text-slate-300 text-xl">vs</span>
+                      <div class="flex flex-col sm:flex-row items-center gap-2 min-w-24">
+                        <img :src="item.away.logo" :alt="item.away.name + ' logo'" class="w-10 h-10 rounded object-contain">
+                        <span class="font-bold text-slate-100 text-lg" x-text="item.away.name"></span>
+                      </div>
+                    </div>
+                    <div class="flex flex-col items-center sm:items-end text-center sm:text-right">
+                      <span class="text-sky-300 font-semibold" x-text="fmtDate(item.date)"></span>
+                      <span class="text-slate-400 text-sm" x-text="item.time + ' ' + item.tz"></span>
+                    </div>
+                  </div>
+                </template>
+
+                <div x-show="filteredMatchups().length === 0" class="text-slate-400 text-sm text-center">
+                  No upcoming matchups for this competition.
+                </div>
+              </div>
+
+            </article>
+          </div>
         </div>
 
         <div class="relative w-full">
@@ -148,14 +242,39 @@
     function tabs() {
       return {
         tab: 'about',
+        competition: 'all',
+        games: [],
         init() {
-          const fromHash = window.location.hash.replace('#','');
-          if (['about','discord','how','server'].includes(fromHash)) this.tab = fromHash;
-          this.$watch('tab', (t) => {
-            history.replaceState(null, '', `#${t}`);
-          });
+          const fromHash = window.location.hash.replace('#', '');
+          if (['about','discord','how','server','results','matchups'].includes(fromHash)) {
+            this.tab = fromHash;
+          }
+
+          // Fetch external JSON
+          fetch('games.json', { cache: 'no-store' })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              return res.json();
+            })
+            .then(data => { this.games = data; })
+            .catch(err => {
+              console.error('Failed to load games JSON', err);
+              this.games = [];
+            });
+
+          this.$watch('tab', (t) => history.replaceState(null, '', `#${t}`));
         },
-        set(name) { this.tab = name; }
+        set(name) { this.tab = name; },
+        fmtDate(iso) {
+          const d = new Date(iso + 'T00:00:00');
+          return d.toLocaleDateString('en-AU', { weekday:'short', day:'2-digit', month:'short' });
+        },
+        filteredResults() {
+          return this.games.filter(g => g.complete && (this.competition === 'all' || g.comp === this.competition));
+        },
+        filteredMatchups() {
+          return this.games.filter(g => !g.complete && (this.competition === 'all' || g.comp === this.competition));
+        }
       }
     }
   </script>

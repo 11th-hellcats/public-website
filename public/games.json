@@ -1,0 +1,22 @@
+[
+  {
+    "comp": "wwl",
+    "home": { "name": "11th Hellcats", "logo": "assets/11orangenothe.png", "score": 2 },
+    "away": { "name": "R22R", "logo": "assets/R22R-LOGO.png", "score": 3 },
+    "date": "2025-08-03",
+    "time": "11:00",
+    "tz": "AEST",
+    "duration": "1hr 30 min",
+    "complete": true
+  },
+  {
+    "comp": "tpl",
+    "home": { "name": "11th Hellcats", "logo": "assets/11orangenothe.png", "score": null },
+    "away": { "name": "L201", "logo": "assets/l201.png", "score": null },
+    "date": "2025-08-10",
+    "time": "11:00",
+    "tz": "AEST",
+    "duration": null,
+    "complete": false
+  }
+]
