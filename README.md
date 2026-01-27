@@ -1,6 +1,6 @@
-# 11th Hellcats Public Website – Local Development
+# SCH Public Website
 
-This repository contains the static website for the **11th Hellcats**.  
+This repository contains the static website for the **Southern Cross Hellcats**.  
 It includes an `index.html` file, Tailwind styling, Alpine.js for interactivity,  
 and a `games.json` file containing competitive results and matchups.
 
