@@ -26,6 +26,6 @@ pnpm-debug.log*
 # OS generated files
 Thumbs.db
 
-# Optional: ignore local build artifacts if you later add a bundler
-dist/
+# SvelteKit
+.svelte-kit/
 build/
