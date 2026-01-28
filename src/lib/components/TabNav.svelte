@@ -1,5 +1,6 @@
 <script>
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
+  import Button from './Button.svelte';
   
   const tabs = [
     { href: '/', label: 'About' },
@@ -10,20 +11,25 @@
   ];
   
   function isActive(href, pathname) {
-    if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
+    // Normalize pathname by removing trailing slash
+    const normalizedPath = pathname.endsWith('/') && pathname !== '/' 
+      ? pathname.slice(0, -1) 
+      : pathname;
+    
+    if (href === '/') return normalizedPath === '/';
+    return normalizedPath === href || normalizedPath.startsWith(href + '/');
   }
 </script>
 
 <div class="flex flex-wrap justify-center gap-3" role="tablist" aria-label="Primary">
-  {#each tabs as tab}
-    <a 
+  {#each tabs as tab (tab.href)}
+    <Button
       href={tab.href}
-      class="inline-grid place-items-center px-4 py-2 rounded-xl font-semibold transition-colors {isActive(tab.href, $page.url.pathname) ? 'bg-accent text-white' : 'bg-slate-800/60 text-ink hover:bg-slate-700/60'}"
-      role="tab"
-      aria-selected={isActive(tab.href, $page.url.pathname)}
-    >
-      {tab.label}
-    </a>
+      label={tab.label}
+      variant={isActive(tab.href, page.url.pathname) ? 'solid' : 'outline'}
+      size="medium"
+      ariaLabel={tab.label}
+      aria-current={isActive(tab.href, page.url.pathname) ? 'page' : undefined}
+    />
   {/each}
 </div>

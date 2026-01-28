@@ -1,22 +1,68 @@
 [
   {
-    "comp": "wwl",
-    "home": { "name": "11th Hellcats", "logo": "assets/11orangenothe.png", "score": 2 },
-    "away": { "name": "R22R", "logo": "assets/R22R-LOGO.png", "score": 3 },
-    "date": "2025-08-03",
-    "time": "11:00",
-    "tz": "AEST",
-    "duration": "1hr 30 min",
+    "comp": "rtg",
+    "home": { "name": "SCH"},
+    "away": { "name": "DAWG" },
+    "date": "2026-02-01",
+    "round": "3",
+    "complete": false
+  },
+  {
+    "comp": "rtg",
+    "home": { "name": "SCH", "score": 0 },
+    "away": { "name": "Resurgence", "score": 5 },
+    "date": "2026-01-24",
+    "round": "2",
     "complete": true
   },
   {
-    "comp": "tpl",
-    "home": { "name": "11th Hellcats", "logo": "assets/11orangenothe.png", "score": 0 },
-    "away": { "name": "L201", "logo": "assets/L201.png", "score": 5 },
-    "date": "2025-08-10",
-    "time": "11:00",
-    "tz": "AEST",
-    "duration": "1hr 15 min",
+    "comp": "friendly",
+    "home": { "name": "SCH", "score": 4 },
+    "away": { "name": "DAWG", "score": 1 },
+    "date": "2026-01-11",
+    "map": "PHL",
+    "midpoint": "Flak position",
+    "schSide": "Axis",
+    "complete": true
+  },
+  {
+    "comp": "friendly",
+    "home": { "name": "SCH", "score": 3 },
+    "away": { "name": "GOAT", "score": 2 },
+    "date": "2026-01-10",
+    "map": "Kursk",
+    "midpoint": "Olegs House",
+    "schSide": "Axis",
+    "complete": true
+  },
+  {
+    "comp": "friendly",
+    "home": { "name": "SCH", "score": 0 },
+    "away": { "name": "TFMC", "score": 5 },
+    "date": "2026-01-07",
+    "map": "Kursk Night",
+    "midpoint": "Olegs House",
+    "schSide": "Axis",
+    "complete": true
+  },
+  {
+    "comp": "friendly",
+    "home": { "name": "SCH", "score": 3 },
+    "away": { "name": "L201", "logo": "assets/L201.png" ,"score": 2 },
+    "date": "2025-12-14",
+    "map": "SME Night",
+    "midpoint": "Checkpoint",
+    "schSide": "Allies",
+    "complete": true
+  },
+  {
+    "comp": "friendly",
+    "home": { "name": "SCH", "score": 2 },
+    "away": { "name": "ANZR", "score": 3 },
+    "date": "2025-12-11",
+    "map": "Kursk",
+    "midpoint": "Olegs House",
+    "schSide": "Axis",
     "complete": true
   }
 ]

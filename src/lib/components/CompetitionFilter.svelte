@@ -13,5 +13,7 @@
     <option value="wwl">Winter War League</option>
     <option value="tpl">TPL</option>
     <option value="oscl">OSCL</option>
+    <option value="rtg">RTG</option>
+    <option value="friendly">Friendly</option>
   </select>
 </div>

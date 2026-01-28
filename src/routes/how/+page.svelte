@@ -1,5 +1,5 @@
 <script>
-  // How to join page
+  import Button from '$lib/components/Button.svelte';
 </script>
 
 <svelte:head>
@@ -22,4 +22,13 @@
     <li>Attend training when you are available</li>
     <li>Check the SCH Discord weekly for game rosters and updates</li>
   </ul>
+
+  <Button
+    href="https://discord.gg/x3ZWzTfrPd"
+    label="Click here to join"
+    variant="outline"
+    size="large"
+    external
+    ariaLabel="Join the Southern Cross Hellcats Discord"
+  />
 </article>

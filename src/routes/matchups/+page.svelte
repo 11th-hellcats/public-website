@@ -16,7 +16,6 @@
 
 <article class="rounded-xl border border-slate-800 bg-slate-900/40 p-4 w-full text-left flex flex-col gap-6">
   <h2 class="text-base text-sky-200 font-semibold mb-2">Competitive Matchups</h2>
-  <p class="text-slate-200 mb-3">Upcoming Competitive Matchups.</p>
 
   <CompetitionFilter bind:competition id="matchups-competition-filter" />
 
